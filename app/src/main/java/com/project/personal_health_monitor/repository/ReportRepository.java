@@ -20,8 +20,7 @@ public class ReportRepository {
         this.reports = reports;
     }
 
-    public void create(Report report) {
-        reports.create(report);
+    public Long create(Report report) { return reports.create(report);
     }
 
     public LiveData<List<ReportWithHealthParameters>> getAll() {

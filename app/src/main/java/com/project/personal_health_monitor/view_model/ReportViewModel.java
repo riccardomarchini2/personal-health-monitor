@@ -21,8 +21,8 @@ public class ReportViewModel extends ViewModel {
         this.reportRepository = reportRepository;
     }
 
-    public void create(Report report) {
-        reportRepository.create(report);
+    public Long create(Report report) {
+        return reportRepository.create(report);
     }
 
     public LiveData<List<ReportWithHealthParameters>> getAll() {

@@ -18,7 +18,7 @@ import java.util.List;
 public interface Reports {
 
     @Insert
-    public void create(Report report);
+    public Long create(Report report);
 
     @Query("SELECT * FROM Report") @Transaction
     public LiveData<List<ReportWithHealthParameters>> getAll();

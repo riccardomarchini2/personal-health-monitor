@@ -12,17 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalHealthMonitor"
         tools:ignore="AllowBackup">
+        <activity android:name=".view.report.ReportActivity"
+            android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar"></activity>
         <activity
             android:name=".view.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.MainActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
