@@ -8,7 +8,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(
-        tableName = "HealthParameterName"
+    tableName = "HealthParameterName"
 )
 public class HealthParameterName {
 

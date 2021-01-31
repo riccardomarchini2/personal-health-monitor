@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.personal_health_monitor">
 
@@ -12,18 +13,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalHealthMonitor"
         tools:ignore="AllowBackup">
-        <activity android:name=".view.report.ReportActivity"
-            android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar"></activity>
+
         <activity
             android:name=".view.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.report.ReportActivity"
+            android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar" />
+
+        <receiver
+            android:name=".notification.Notification"
+            android:exported="false" />
+
+        <service android:name=".notification.NotificationMaster" />
+
     </application>
 
 </manifest>
