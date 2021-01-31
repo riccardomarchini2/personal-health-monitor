@@ -23,8 +23,11 @@ public interface Reports {
     @Query("SELECT * FROM Report") @Transaction
     public LiveData<List<ReportWithHealthParameters>> getAll();
 
-    @Query("SELECT * FROM Report WHERE Report.date = :localDate") @Transaction
+    @Query("SELECT * FROM Report WHERE Report.local_date = :localDate") @Transaction
     public LiveData<List<ReportWithHealthParameters>> getBy(LocalDate localDate);
+
+    @Query("SELECT * FROM Report WHERE Report.local_date > :localDate") @Transaction
+    public LiveData<List<ReportWithHealthParameters>> greaterThan(LocalDate localDate);
 
     @Update
     public void update(Report report);

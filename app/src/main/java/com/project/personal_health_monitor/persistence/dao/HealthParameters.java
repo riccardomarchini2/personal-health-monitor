@@ -15,7 +15,7 @@ import java.util.List;
 public interface HealthParameters {
 
     @Insert
-    public void create(HealthParameter healthParameter);
+    public Long create(HealthParameter healthParameter);
 
     @Query("SELECT * FROM HealthParameter")
     public LiveData<List<HealthParameter>> getAll();

@@ -9,14 +9,15 @@ import androidx.room.PrimaryKey;
 
 @Entity(
     tableName = "HealthParameter",
-    foreignKeys = {@ForeignKey(entity = Report.class,
+    foreignKeys = {
+        @ForeignKey(entity = Report.class,
             parentColumns = "id",
             childColumns = "report_id",
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
     ), @ForeignKey(entity = HealthParameterName.class,
             parentColumns = "id",
-            childColumns = "healthParameterName_id",
+            childColumns = "health_parameter_name_id",
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
     )}
@@ -31,11 +32,19 @@ public class HealthParameter {
     @NonNull
     public Long reportId;
 
-    @Embedded
-    public HealthParameterName name;
+    @ColumnInfo(name = "health_parameter_name_id")
+    public Long healthParameterNameId;
+
+    @ColumnInfo(name = "health_parameter_name")
+    @NonNull
+    public String healthParameterName;
+
+    @ColumnInfo(name = "health_parameter_priority")
+    @NonNull
+    public Integer healthParameterPriority;
 
     @ColumnInfo(name = "value")
     @NonNull
-    public Long value;
+    public Double value;
     
 }

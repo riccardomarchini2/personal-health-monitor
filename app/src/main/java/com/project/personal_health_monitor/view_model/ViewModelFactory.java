@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.project.personal_health_monitor.persistence.model.HealthParameterName;
 import com.project.personal_health_monitor.repository.HealthParameterNameRepository;
 import com.project.personal_health_monitor.repository.HealthParameterRepository;
 import com.project.personal_health_monitor.repository.ReportRepository;

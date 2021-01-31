@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/application_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.project.personal_health_monitor.view.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_reports"
+        android:name="com.project.personal_health_monitor.view.reports.ReportsFragment"
+        android:label="@string/menu_reports"
+        tools:layout="@layout/fragment_reports" />
+
+    <fragment
+        android:id="@+id/navigation_health_parameters"
+        android:name="com.project.personal_health_monitor.view.health_parameters.HealthParametersFragment"
+        android:label="@string/menu_health_parameters"
+        tools:layout="@layout/fragment_graphs" />
+
+    <fragment
+        android:id="@+id/navigation_graphs"
+        android:name="com.project.personal_health_monitor.view.graphs.GraphsFragment"
+        android:label="@string/menu_graphs"
+        tools:layout="@layout/fragment_graphs" />
+
+</navigation>

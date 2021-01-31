@@ -26,4 +26,5 @@ public interface HealthParameterNames {
 
     @Delete
     public void delete(HealthParameterName healthParameterName);
+
 }

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.report.ReportActivity">
+    tools:context=".view.ReportActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/application_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.PersonalHealthMonitor.AppBarOverlay"
@@ -24,61 +24,84 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <Button
-        android:id="@+id/change_date_button"
+    <TextView
+        android:id="@+id/report_local_date_text_view_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/change_date"
-        app:layout_constraintEnd_toStartOf="@+id/date_textview"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        android:layout_marginStart="24dp"
+        android:text="@string/report_date"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/change_report_local_date_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toTopOf="@+id/change_report_local_date_button" />
 
     <TextView
-        android:id="@+id/date_textview"
+        android:id="@+id/report_local_date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/change_date_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/change_date_button"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/report_local_date_text_view_label"
+        app:layout_constraintStart_toEndOf="@+id/report_local_date_text_view_label"
+        app:layout_constraintTop_toTopOf="@+id/report_local_date_text_view_label" />
 
     <Button
-        android:id="@+id/save_health_paramater_button"
+        android:id="@+id/change_report_local_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/save_health_parameter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="24dp"
+        android:text="@string/choose_date"
+        app:layout_constraintStart_toEndOf="@+id/report_local_date_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/application_bar_layout" />
+
+    <EditText
+        android:id="@+id/report_notes_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin"
+        android:hint="@string/notes"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/add_health_parameter_button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_report_local_date_button" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/health_parameters_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/activity_margin"
+        app:layout_constraintBottom_toTopOf="@+id/save_health_parameter_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/report_notes_edit_text"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/add_health_parameter_button"
+        android:id="@+id/create_health_parameter_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="@string/add_health_parameter"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/create_health_parameter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/save_health_paramater_button"
+        app:layout_constraintEnd_toStartOf="@+id/save_health_parameter_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/save_health_paramater_button"
+    <Button
+        android:id="@+id/save_health_parameter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/save_report"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_date_button"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/create_health_parameter_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

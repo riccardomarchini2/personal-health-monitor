@@ -14,9 +14,9 @@ public class Report {
     @ColumnInfo(name = "id")
     public Long id;
 
-    @ColumnInfo(name = "date")
+    @ColumnInfo(name = "local_date")
     @NonNull
-    public LocalDate date;
+    public LocalDate localDate;
 
     @ColumnInfo(name = "notes")
     public String notes;

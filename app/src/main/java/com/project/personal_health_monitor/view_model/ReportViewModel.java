@@ -33,6 +33,10 @@ public class ReportViewModel extends ViewModel {
         return reportRepository.getBy(localDate);
     }
 
+    public LiveData<List<ReportWithHealthParameters>> greaterThan(LocalDate localDate) {
+        return reportRepository.greaterThan(localDate);
+    }
+
     public void update(Report report) {
         reportRepository.update(report);
     }

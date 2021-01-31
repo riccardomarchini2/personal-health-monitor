@@ -23,4 +23,10 @@ public class HealthParameterName {
     @ColumnInfo(name = "priority")
     @NonNull
     public Integer priority;
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

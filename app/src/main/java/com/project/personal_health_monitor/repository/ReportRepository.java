@@ -31,6 +31,10 @@ public class ReportRepository {
         return reports.getBy(localDate);
     }
 
+    public LiveData<List<ReportWithHealthParameters>> greaterThan(LocalDate localDate) {
+        return reports.greaterThan(localDate);
+    }
+
     public void update(Report report) {
         reports.update(report);
     }

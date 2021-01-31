@@ -5,20 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="@dimen/activity_margin">
 
     <TextView
-        android:id="@+id/date_text_view"
+        android:id="@+id/report_notes_text_view_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="@string/notes"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/notes_text_view"
+        android:id="@+id/report_notes_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/report_notes_text_view_label"
+        app:layout_constraintStart_toEndOf="@+id/report_notes_text_view_label"
+        app:layout_constraintTop_toTopOf="@+id/report_notes_text_view_label" />
+
+    <TextView
+        android:id="@+id/report_health_parameters_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/report_notes_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

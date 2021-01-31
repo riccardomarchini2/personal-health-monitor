@@ -37,13 +37,13 @@ public class PersistenceModule {
     }
 
     @Provides @Singleton
-    public HealthParameters healthParameters(ApplicationDatabase applicationDatabase) {
-        return applicationDatabase.getHealthParameters();
+    public HealthParameterNames healthParameterNames(ApplicationDatabase applicationDatabase) {
+        return applicationDatabase.getHealthParameterNames();
     }
 
     @Provides @Singleton
-    public HealthParameterNames healthParameterNames(ApplicationDatabase applicationDatabase) {
-        return applicationDatabase.getHealthParameterNames();
+    public HealthParameters healthParameters(ApplicationDatabase applicationDatabase) {
+        return applicationDatabase.getHealthParameters();
     }
 
     @Provides @Singleton
@@ -52,13 +52,13 @@ public class PersistenceModule {
     }
 
     @Provides @Singleton
-    public HealthParameterRepository healthParameterRepository(HealthParameters healthParameters) {
-        return new HealthParameterRepository(healthParameters);
+    public HealthParameterNameRepository healthParameterNameRepository(HealthParameterNames healthParameterNames) {
+        return new HealthParameterNameRepository(healthParameterNames);
     }
 
     @Provides @Singleton
-    public HealthParameterNameRepository healthParameterNameRepository(HealthParameterNames healthParameterNames) {
-        return new HealthParameterNameRepository(healthParameterNames);
+    public HealthParameterRepository healthParameterRepository(HealthParameters healthParameters) {
+        return new HealthParameterRepository(healthParameters);
     }
 
     @Provides @Singleton
