@@ -6,6 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.project.personal_health_monitor.persistence.converter.HealthParameterNameConverter;
 import com.project.personal_health_monitor.persistence.converter.LocalDateConverter;
+import com.project.personal_health_monitor.persistence.dao.HealthParameterNames;
 import com.project.personal_health_monitor.persistence.dao.HealthParameters;
 import com.project.personal_health_monitor.persistence.dao.Reports;
 import com.project.personal_health_monitor.persistence.model.HealthParameter;
@@ -18,4 +19,5 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     public abstract HealthParameters getHealthParameters();
     public abstract Reports getReports();
 
+    public abstract HealthParameterNames getHealthParameterNames();
 }

@@ -94,6 +94,7 @@ public class HealthParameterAdapter extends RecyclerView.Adapter<HealthParameter
         viewHolder.deleteHealthParameterButton.setOnClickListener((view)->{
             data.remove(position);
             notifyItemRemoved(position);
+            notifyItemRangeChanged(position, data.size());
         });
     }
 
