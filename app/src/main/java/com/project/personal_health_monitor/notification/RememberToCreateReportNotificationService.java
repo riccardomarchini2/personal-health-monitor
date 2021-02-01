@@ -65,6 +65,10 @@ public class RememberToCreateReportNotificationService extends LifecycleService 
          */
         PendingIntent contentIntent = PendingIntent.getActivity(context, 1, reportActivity, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // New intent to postpone
+        Intent postponeIntent = new Intent(context, PostponeService.class);
+        PendingIntent postponePendingIntent = PendingIntent.getService(context, 0, postponeIntent, 0);
+
         // Creates notification in the notification channel
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, Notification.CHANNEL_NAME)
             .setSmallIcon(R.drawable.ic_notifications)
@@ -72,6 +76,7 @@ public class RememberToCreateReportNotificationService extends LifecycleService 
             .setContentText("Click on the notification to start creating today's report")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(contentIntent)
+            .addAction(R.drawable.ic_postpone, "Postpone", postponePendingIntent )
             .setAutoCancel(true);
 
         // Post a notification to be shown in the status bar or update an existing one

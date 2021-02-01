@@ -22,13 +22,14 @@ public class PersonalHealthMonitor extends Application {
     public void onCreate() {
         super.onCreate();
 
+        //Dependency Injection
         applicationComponent = DaggerApplicationComponent.builder()
             .applicationModule(new ApplicationModule(this))
             .persistenceModule(new PersistenceModule(this))
             .build();
 
+        //Settings values
         SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.NAME, MODE_PRIVATE);
-
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if (!sharedPreferences.contains(SettingsActivity.REMEMBER_REPORT_HOUR) && !sharedPreferences.contains(SettingsActivity.REMEMBER_REPORT_HOUR)) {
@@ -52,6 +53,7 @@ public class PersonalHealthMonitor extends Application {
         editor.apply();
     }
 
+    // Give access to Dependency Injection from the activities
     public ApplicationComponent applicationComponent() {
         return applicationComponent;
     }

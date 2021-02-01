@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_margin"
+    android:padding="8dp"
     tools:context=".view.home.HomeFragment">
 
     <CalendarView
@@ -18,9 +18,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_marginVertical="8dp"
         android:padding="@dimen/activity_margin"
-        app:layout_constraintBottom_toTopOf="@+id/create_new_report_floating_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reports_calendar_view">

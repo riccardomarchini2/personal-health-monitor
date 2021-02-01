@@ -159,14 +159,14 @@ public class ReportActivity extends BaseActivity {
                 healthParameter.reportId = reportId;
                 healthParameterViewModel.create(healthParameter);
             });
-
+            //send notification if value > threshold
             finish();
         }
     }
 
     private boolean isValidHealthReport() {
         List<HealthParameter> healthParameters = healthParameterAdapter.getHealthParameters();
-        return Objects.nonNull(report.localDate) && healthParameters.size() > 0 && healthParameters.stream().allMatch(this::isValidHealthParameter);
+        return Objects.nonNull(report.localDate) && healthParameters.size() > 1 && healthParameters.stream().allMatch(this::isValidHealthParameter);
     }
 
     private boolean isValidHealthParameter(HealthParameter healthParameter) {

@@ -37,6 +37,7 @@
 
         <service android:name=".notification.RememberToCreateReportNotificationService" />
         <service android:name=".notification.ThresholdLimitReachedNotificationService" />
+        <service android:name=".notification.PostponeService" />
     </application>
 
 </manifest>

@@ -4,7 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +16,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.project.personal_health_monitor.R;
 import com.project.personal_health_monitor.notification.Notification;
+import com.project.personal_health_monitor.persistence.model.HealthParameterName;
 import com.project.personal_health_monitor.view.base.BaseActivity;
 import com.project.personal_health_monitor.view.dialog.MyTimePickerDialog;
 
@@ -20,6 +25,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,10 +40,20 @@ public class SettingsActivity extends BaseActivity {
 
     public static final String REMEMBER_REPORT_HOUR = "RememberReportHour";
     public static final String REMEMBER_REPORT_MINUTE = "RememberReportMinute";
-    public static final int DEFAULT_REMEMBER_REPORT_HOUR = 8;
+    public static final int DEFAULT_REMEMBER_REPORT_HOUR = 20;
     public static final int DEFAULT_REMEMBER_REPORT_MINUTE = 0;
     public static final String POSTPONE_BY = "PostponeBy";
     public static final int DEFAULT_POSTPONE_BY = 10;
+    public static final List<Integer> POSTPONE_BY_VALUES = new ArrayList<>();
+
+    static {
+        POSTPONE_BY_VALUES.add(10);
+        POSTPONE_BY_VALUES.add(20);
+        POSTPONE_BY_VALUES.add(30);
+        POSTPONE_BY_VALUES.add(40);
+        POSTPONE_BY_VALUES.add(50);
+        POSTPONE_BY_VALUES.add(60);
+    }
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -44,8 +61,8 @@ public class SettingsActivity extends BaseActivity {
     @BindView(R.id.report_local_time_text_view)
     TextView reportLocalTimeTextView;
 
-    @BindView(R.id.report_postpone_by_edit_text)
-    EditText reportPostponeByEditText;
+    @BindView(R.id.report_postpone_by_spinner)
+    Spinner reportPostponeBySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +92,36 @@ public class SettingsActivity extends BaseActivity {
 
         LocalTime localTime = LocalTime.of(hour, minute);
         setLocalTime(localTime);
+
+        ArrayAdapter<Integer> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, POSTPONE_BY_VALUES);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        reportPostponeBySpinner.setAdapter(spinnerArrayAdapter);
+
+        int minutes = sharedPreferences.getInt(SettingsActivity.POSTPONE_BY, SettingsActivity.DEFAULT_POSTPONE_BY);
+
+        for (int i=0; i<spinnerArrayAdapter.getCount(); i++){
+            int value = spinnerArrayAdapter.getItem(i);
+            if (value == minutes) {
+                reportPostponeBySpinner.setSelection(i);
+            }
+        }
+
+        reportPostponeBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putInt(SettingsActivity.POSTPONE_BY, SettingsActivity.POSTPONE_BY_VALUES.get(position));
+
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     @OnClick(R.id.change_report_local_time_button)
