@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">personal-health-monitor</string>
+    <string name="application_name">Personal Health Monitor</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_header_title">Personal Health Monitor</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_health_parameters">Health Parameters</string>
+    <string name="menu_reports">Reports</string>
+    <string name="menu_graphs">Graphs</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="report_date">Report date</string>
+    <string name="choose_date">Choose date</string>
+
+    <string name="health_parameter_name">Health parameter name</string>
+    <string name="health_parameter_value">Health parameter value</string>
+    <string name="health_parameter">Health parameter</string>
+    <string name="create_health_parameter">Create health parameter</string>
+    <string name="save_report">Save report</string>
+
+    <string name="priority">Priority</string>
+
+    <string name="dismiss">Dismiss</string>
+    <string name="save">Save</string>
+    <string name="notes">Notes</string>
+    <string name="report_count">Report count</string>
+    <string name="report_health_parameters_summary">Health parameters summary</string>
+    <string name="report_count_last_week">Reports count over last week</string>
+    <string name="report_remembered_at">Report alarm at</string>
+    <string name="choose_time">Choose time</string>
+    <string name="report_postpone_by">Postpone by</string>
+
 </resources>

@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.project.personal_health_monitor">
 
     <application
+        android:name=".PersonalHealthMonitor"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/application_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Personalhealthmonitor">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.PersonalHealthMonitor"
+        tools:ignore="AllowBackup">
+
+        <activity
+            android:name=".view.MainActivity"
+            android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.ReportActivity"
+            android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar" />
+
+        <activity
+            android:name=".view.SettingsActivity"
+            android:theme="@style/Theme.PersonalHealthMonitor.NoActionBar" />
+
+        <receiver
+            android:name=".notification.Notification"
+            android:exported="false" />
+
+        <service android:name=".notification.RememberToCreateReportNotificationService" />
+        <service android:name=".notification.ThresholdLimitReachedNotificationService" />
     </application>
 
 </manifest>
