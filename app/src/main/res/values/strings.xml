@@ -28,5 +28,8 @@
     <string name="report_count">Report count</string>
     <string name="report_health_parameters_summary">Health parameters summary</string>
     <string name="report_count_last_week">Reports count over last week</string>
+    <string name="report_remembered_at">Report alarm at</string>
+    <string name="choose_time">Choose time</string>
+    <string name="report_postpone_by">Postpone by</string>
 
 </resources>

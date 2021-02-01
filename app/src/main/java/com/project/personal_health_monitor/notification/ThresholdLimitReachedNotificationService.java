@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LifecycleService;
@@ -12,10 +13,7 @@ import androidx.lifecycle.LifecycleService;
 import com.project.personal_health_monitor.R;
 import com.project.personal_health_monitor.view.MainActivity;
 
-/**
- * It's the notification manager.
- */
-public class NotificationMaster extends LifecycleService {
+public class ThresholdLimitReachedNotificationService extends LifecycleService {
 
     // Sets the importance of notification. Shows everywhere, makes noise and peeks.
     private static final int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
@@ -30,7 +28,8 @@ public class NotificationMaster extends LifecycleService {
     }
 
     private void sendNotification(Intent intent) {
-        int id = intent.getExtras().getInt("id");
+        Bundle bundle = intent.getExtras();
+        int id = bundle.getInt("id");
 
         Context context = getApplicationContext();
 

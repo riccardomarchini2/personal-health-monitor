@@ -18,7 +18,7 @@ import com.project.personal_health_monitor.persistence.model.HealthParameter;
 import com.project.personal_health_monitor.persistence.model.HealthParameterName;
 import com.project.personal_health_monitor.persistence.model.Report;
 import com.project.personal_health_monitor.view.base.BaseActivity;
-import com.project.personal_health_monitor.view.dialog.DatePickerDialog;
+import com.project.personal_health_monitor.view.dialog.MyDatePickerDialog;
 import com.project.personal_health_monitor.view.adapter.HealthParameterAdapter;
 import com.project.personal_health_monitor.view_model.HealthParameterNameViewModel;
 import com.project.personal_health_monitor.view_model.HealthParameterViewModel;
@@ -98,8 +98,8 @@ public class ReportActivity extends BaseActivity {
     }
 
     @OnClick(R.id.change_report_local_date_button)
-    public void onDate() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog();
+    public void onChangeDateClicked() {
+        MyDatePickerDialog datePickerDialog = new MyDatePickerDialog();
         datePickerDialog.setCallback(this::onDateChange);
         datePickerDialog.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         datePickerDialog.show(this.getSupportFragmentManager(), "Select date");

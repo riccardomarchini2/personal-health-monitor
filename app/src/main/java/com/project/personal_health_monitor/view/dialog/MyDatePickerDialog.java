@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class DatePickerDialog extends DialogFragment {
+public class MyDatePickerDialog extends DialogFragment {
 
     private DatePickerCallback datePickerCallback;
 

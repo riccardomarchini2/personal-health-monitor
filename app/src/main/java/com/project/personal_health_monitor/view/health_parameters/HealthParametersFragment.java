@@ -49,7 +49,7 @@ public class HealthParametersFragment extends BaseFragment {
         initializeHealthParameterNameRecyclerView();
 
         healthParameterNameViewModel = new ViewModelProvider(this, viewModelFactory).get(HealthParameterNameViewModel.class);
-        healthParameterNameViewModel.getAll().observe(getActivity(), this::setHealthParameterNames);
+        healthParameterNameViewModel.getAll().observe(getViewLifecycleOwner(), this::setHealthParameterNames);
 
         return root;
     }

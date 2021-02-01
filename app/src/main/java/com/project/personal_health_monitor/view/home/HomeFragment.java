@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void onDateChanged(LocalDate localDate) {
-        reportViewModel.getBy(localDate).observe(getActivity(), (reportWithHealthParameters) -> updateUI(localDate, reportWithHealthParameters));
+        reportViewModel.getBy(localDate).observe(getViewLifecycleOwner(), (reportWithHealthParameters) -> updateUI(localDate, reportWithHealthParameters));
     }
 
     private void updateUI(LocalDate localDate, List<ReportWithHealthParameters> reportsWithHealthParameters) {

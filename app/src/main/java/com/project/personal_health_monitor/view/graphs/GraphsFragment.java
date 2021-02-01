@@ -7,35 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.project.personal_health_monitor.PersonalHealthMonitor;
 import com.project.personal_health_monitor.R;
-import com.project.personal_health_monitor.persistence.model.HealthParameter;
 import com.project.personal_health_monitor.persistence.model.HealthParameterName;
 import com.project.personal_health_monitor.persistence.model.ReportWithHealthParameters;
 import com.project.personal_health_monitor.view.base.BaseFragment;
 import com.project.personal_health_monitor.view_model.HealthParameterNameViewModel;
-import com.project.personal_health_monitor.view_model.HealthParameterViewModel;
 import com.project.personal_health_monitor.view_model.ReportViewModel;
 import com.project.personal_health_monitor.view_model.ViewModelFactory;
 
@@ -66,16 +55,14 @@ public class GraphsFragment extends BaseFragment {
 
     @Inject ViewModelFactory viewModelFactory;
 
-    private ReportViewModel reportViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_graphs, container, false);
         injectDependencies(root);
 
-        reportViewModel = new ViewModelProvider(this, viewModelFactory).get(ReportViewModel.class);
+        ReportViewModel reportViewModel = new ViewModelProvider(this, viewModelFactory).get(ReportViewModel.class);
 
         LocalDate lastWeek = LocalDate.now().minusDays(7);
-        reportViewModel.greaterThan(lastWeek).observe(getActivity(), this::initializeGraphs);
+        reportViewModel.greaterThan(lastWeek).observe(getViewLifecycleOwner(), this::updateGraphs);
 
         return root;
     }
@@ -85,19 +72,18 @@ public class GraphsFragment extends BaseFragment {
         ButterKnife.bind(this, root);
     }
 
-    private void initializeGraphs(List<ReportWithHealthParameters> reportsWithHealthParameters) {
+    private void updateGraphs(List<ReportWithHealthParameters> reportsWithHealthParameters) {
         initializeHealthParameterBarChart(reportsWithHealthParameters);
         initializeReportCountBarChart(reportsWithHealthParameters);
     }
 
     private void initializeHealthParameterBarChart(List<ReportWithHealthParameters> reportsWithHealthParameters) {
         HealthParameterNameViewModel healthParameterNameViewModel = new ViewModelProvider(this, viewModelFactory).get(HealthParameterNameViewModel.class);
-        healthParameterNameViewModel.getAll().observe(getActivity(), healthParameterNames -> doInitializeHealthParameterBarChart(healthParameterNames, reportsWithHealthParameters));
-
+        healthParameterNameViewModel.getAll().observe(getViewLifecycleOwner(), healthParameterNames -> doInitializeHealthParameterBarChart(healthParameterNames, reportsWithHealthParameters));
     }
 
     private void doInitializeHealthParameterBarChart(List<HealthParameterName> healthParameterNames, List<ReportWithHealthParameters> reportsWithHealthParameters) {
-        ArrayAdapter<HealthParameterName> spinnerArrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, healthParameterNames);
+        ArrayAdapter<HealthParameterName> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, healthParameterNames);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         healthParameterNameSpinner.setAdapter(spinnerArrayAdapter);
 
@@ -139,6 +125,9 @@ public class GraphsFragment extends BaseFragment {
                 healthParameterBarChart.getXAxis().setDrawGridLines(false);
                 healthParameterBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
                 healthParameterBarChart.getLegend().setEnabled(false);
+                healthParameterBarChart.setTouchEnabled(false);
+                healthParameterBarChart.setDragEnabled(false);
+                healthParameterBarChart.setPinchZoom(false);
 
                 healthParameterBarChart.animateY(1000);
             }
@@ -174,6 +163,9 @@ public class GraphsFragment extends BaseFragment {
         reportCountBarChart.getXAxis().setDrawGridLines(false);
         reportCountBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         reportCountBarChart.getLegend().setEnabled(false);
+        reportCountBarChart.setTouchEnabled(false);
+        reportCountBarChart.setDragEnabled(false);
+        reportCountBarChart.setPinchZoom(false);
 
         reportCountBarChart.animateY(1000);
     }

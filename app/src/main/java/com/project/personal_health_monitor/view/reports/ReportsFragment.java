@@ -106,7 +106,7 @@ public class ReportsFragment extends BaseFragment {
     }
 
     private void onDateChanged(LocalDate localDate) {
-        reportViewModel.getBy(localDate).observe(getActivity(), this::updateReportRecyclerView);
+        reportViewModel.getBy(localDate).observe(getViewLifecycleOwner(), this::updateReportRecyclerView);
     }
 
     private void updateReportRecyclerView(List<ReportWithHealthParameters> reportsWithHealthParameters) {
