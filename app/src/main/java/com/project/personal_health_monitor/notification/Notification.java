@@ -14,16 +14,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Notification extends BroadcastReceiver {
-    public static final Map<NotificationType, Integer> NOTIFICATION_TYPE_IDS = Map.of(
-        NotificationType.REMEMBER_TO_CREATE_REPORT, 0,
-        NotificationType.THRESHOLD_LIMIT_REACHED, 1
-    );
+    public static final Map<NotificationType, Integer> NOTIFICATION_TYPE_IDS;
+
+    static {
+        NOTIFICATION_TYPE_IDS = new HashMap<>();
+        NOTIFICATION_TYPE_IDS.put(NotificationType.REMEMBER_TO_CREATE_REPORT, 0);
+        NOTIFICATION_TYPE_IDS.put(NotificationType.THRESHOLD_LIMIT_REACHED, 1);
+    }
 
     // Sets the importance of notification. Shows everywhere, makes noise and peeks.
     public static final int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
@@ -31,7 +35,7 @@ public class Notification extends BroadcastReceiver {
     // Sets channel's name for NotificationManager Class
     public static final String CHANNEL_NAME = "PersonalHealthMonitor";
 
-    private static final Map<NotificationType, PendingIntent> NOTIFICATION_PENDING_INTENT = Map.of();
+    private static final Map<NotificationType, PendingIntent> NOTIFICATION_PENDING_INTENT = new HashMap<>();
 
     public static void setRememberToCreateReportNotification(Context context, LocalDateTime localDateTime) {
         PendingIntent existingPendingIntent = NOTIFICATION_PENDING_INTENT.get(NotificationType.REMEMBER_TO_CREATE_REPORT);
@@ -103,6 +107,39 @@ public class Notification extends BroadcastReceiver {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, millis, pendingIntent);
     }
 
+
+    ////DA FINIRE
+    public static void setThresholdExceededNotification(Context context, String name, double threshold, double averageValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SettingsActivity.NAME, MODE_PRIVATE);
+
+        //LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(minutes);
+        // Dovrei prendere gli helath parameter values
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        // Creates new intent to receives notification
+        Intent notificationReceiver = new Intent(context, Notification.class);
+
+        // Puts new notification to intent just created
+        notificationReceiver.putExtra("id", NOTIFICATION_TYPE_IDS.get(NotificationType.THRESHOLD_LIMIT_REACHED));
+        notificationReceiver.putExtra("name", name);
+        notificationReceiver.putExtra("threshold", threshold);
+        notificationReceiver.putExtra("averageValue", averageValue );
+
+        /*
+         * Creates new PendingIntent which returns an existing or new PendingIntent, matching
+         * the given parameters.
+         */
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Returns the date of this moments in milliseconds
+        LocalDateTime localDateTime = LocalDateTime.now();
+        long millis = localDateTime.toInstant(OffsetDateTime.now().getOffset()).toEpochMilli();
+
+        // Sets exact alarm to wake up after millis milliseconds
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, millis, pendingIntent);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         int id = intent.getExtras().getInt("id");
@@ -114,6 +151,9 @@ public class Notification extends BroadcastReceiver {
             notificationService = new Intent(context, RememberToCreateReportNotificationService.class);
         } else {
             notificationService = new Intent(context, ThresholdLimitReachedNotificationService.class);
+            notificationService.putExtra("name", intent.getExtras().getString("name"));
+            notificationService.putExtra("threshold", intent.getExtras().getDouble("threshold"));
+            notificationService.putExtra("averageValue", intent.getExtras().getDouble("averageValue"));
         }
 
         /*

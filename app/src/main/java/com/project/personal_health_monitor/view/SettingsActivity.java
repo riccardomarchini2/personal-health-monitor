@@ -46,6 +46,14 @@ public class SettingsActivity extends BaseActivity {
     public static final int DEFAULT_POSTPONE_BY = 10;
     public static final List<Integer> POSTPONE_BY_VALUES = new ArrayList<>();
 
+    public static final String THRESHOLD = "Threshold";
+    public static final Float THRESHOLD_DEFAULT = 5.0F;
+    public static final List<Float> THRESHOLD_VALUES = new ArrayList<>();
+
+    public static final String THRESHOLD_CONTROL = "Threshold Control";
+    public static final Integer THRESHOLD_CONTROL_DEFAULT = 7;
+    public static final List<Integer> THRESHOLD_CONTROL_VALUES = new ArrayList<>();
+
     static {
         POSTPONE_BY_VALUES.add(10);
         POSTPONE_BY_VALUES.add(20);
@@ -53,6 +61,28 @@ public class SettingsActivity extends BaseActivity {
         POSTPONE_BY_VALUES.add(40);
         POSTPONE_BY_VALUES.add(50);
         POSTPONE_BY_VALUES.add(60);
+
+        THRESHOLD_VALUES.add(5.0F);
+        THRESHOLD_VALUES.add(5.5F);
+        THRESHOLD_VALUES.add(6.0F);
+        THRESHOLD_VALUES.add(6.5F);
+        THRESHOLD_VALUES.add(7.0F);
+        THRESHOLD_VALUES.add(7.5F);
+        THRESHOLD_VALUES.add(8.0F);
+        THRESHOLD_VALUES.add(8.5F);
+        THRESHOLD_VALUES.add(9.0F);
+        THRESHOLD_VALUES.add(9.5F);
+        THRESHOLD_VALUES.add(10.0F);
+
+        THRESHOLD_CONTROL_VALUES.add(2);
+        THRESHOLD_CONTROL_VALUES.add(3);
+        THRESHOLD_CONTROL_VALUES.add(4);
+        THRESHOLD_CONTROL_VALUES.add(5);
+        THRESHOLD_CONTROL_VALUES.add(6);
+        THRESHOLD_CONTROL_VALUES.add(7);
+        THRESHOLD_CONTROL_VALUES.add(14);
+        THRESHOLD_CONTROL_VALUES.add(21);
+        THRESHOLD_CONTROL_VALUES.add(28);
     }
 
     @BindView(R.id.toolbar)
@@ -63,6 +93,12 @@ public class SettingsActivity extends BaseActivity {
 
     @BindView(R.id.report_postpone_by_spinner)
     Spinner reportPostponeBySpinner;
+
+    @BindView(R.id.threshold_spinner)
+    Spinner thresholdSpinner;
+
+    @BindView(R.id.threshold_control_spinner)
+    Spinner thresholdControlSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +148,66 @@ public class SettingsActivity extends BaseActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putInt(SettingsActivity.POSTPONE_BY, SettingsActivity.POSTPONE_BY_VALUES.get(position));
+
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        //DA FINIRE
+        ArrayAdapter<Float> spinnerArrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, THRESHOLD_VALUES);
+        spinnerArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        thresholdSpinner.setAdapter(spinnerArrayAdapter2);
+
+        float threshold = sharedPreferences.getFloat(SettingsActivity.THRESHOLD, SettingsActivity.THRESHOLD_DEFAULT);
+
+        for (int i=0; i<spinnerArrayAdapter2.getCount(); i++){
+            float value = spinnerArrayAdapter2.getItem(i);
+            if (value == threshold) {
+                thresholdSpinner.setSelection(i);
+            }
+        }
+
+        thresholdSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putFloat(SettingsActivity.THRESHOLD, SettingsActivity.THRESHOLD_VALUES.get(position));
+
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayAdapter<Integer> spinnerArrayAdapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, THRESHOLD_CONTROL_VALUES);
+        spinnerArrayAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        thresholdControlSpinner.setAdapter(spinnerArrayAdapter3);
+
+        int thresholdControl = sharedPreferences.getInt(SettingsActivity.THRESHOLD_CONTROL, SettingsActivity.THRESHOLD_CONTROL_DEFAULT);
+
+        for (int i=0; i<spinnerArrayAdapter3.getCount(); i++){
+            int value = spinnerArrayAdapter3.getItem(i);
+            if (value == thresholdControl) {
+                thresholdControlSpinner.setSelection(i);
+            }
+        }
+
+        thresholdControlSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putInt(SettingsActivity.THRESHOLD_CONTROL, SettingsActivity.THRESHOLD_CONTROL_VALUES.get(position));
 
                 editor.apply();
             }

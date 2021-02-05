@@ -9,14 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.project.personal_health_monitor.PersonalHealthMonitor;
 import com.project.personal_health_monitor.R;
+import com.project.personal_health_monitor.notification.Notification;
 import com.project.personal_health_monitor.persistence.model.HealthParameter;
 import com.project.personal_health_monitor.persistence.model.HealthParameterName;
 import com.project.personal_health_monitor.persistence.model.Report;
+import com.project.personal_health_monitor.persistence.model.ReportWithHealthParameters;
 import com.project.personal_health_monitor.view.base.BaseActivity;
 import com.project.personal_health_monitor.view.dialog.MyDatePickerDialog;
 import com.project.personal_health_monitor.view.adapter.HealthParameterAdapter;
@@ -24,6 +28,8 @@ import com.project.personal_health_monitor.view_model.HealthParameterNameViewMod
 import com.project.personal_health_monitor.view_model.HealthParameterViewModel;
 import com.project.personal_health_monitor.view_model.ReportViewModel;
 import com.project.personal_health_monitor.view_model.ViewModelFactory;
+import com.project.personal_health_monitor.view_model.model.SummaryHealthParameter;
+import com.project.personal_health_monitor.view_model.model.SummaryReport;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +42,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.project.personal_health_monitor.view.SettingsActivity.THRESHOLD_CONTROL_DEFAULT;
+import static com.project.personal_health_monitor.view.SettingsActivity.THRESHOLD_DEFAULT;
 
 @SuppressLint("NonConstantResourceId")
 public class ReportActivity extends BaseActivity {
@@ -159,9 +168,42 @@ public class ReportActivity extends BaseActivity {
                 healthParameter.reportId = reportId;
                 healthParameterViewModel.create(healthParameter);
             });
-            //send notification if value > threshold
-            finish();
+            notifyIfThresholdExceeded();
         }
+    }
+
+    private void notifyIfThresholdExceeded() {
+        PersonalHealthMonitor personalHealthMonitor = (PersonalHealthMonitor) this.getApplicationContext();
+        ReportViewModel reportViewModel = personalHealthMonitor.applicationComponent().reportViewModel();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.NAME, MODE_PRIVATE);
+        float threshold = sharedPreferences.getFloat(SettingsActivity.THRESHOLD, THRESHOLD_DEFAULT);
+        int days = sharedPreferences.getInt(SettingsActivity.THRESHOLD_CONTROL, THRESHOLD_CONTROL_DEFAULT);
+        int priority = 0;
+
+        LocalDate localDate = LocalDate.now().minusDays(days);
+        reportViewModel.greaterThan(localDate).observe(this, (reportsWithHealthParameters) -> {
+
+            SummaryReport summaryReport = new SummaryReport(null);
+
+            for (ReportWithHealthParameters reportWithHealthParameter : reportsWithHealthParameters) {
+                for (HealthParameter healthParameter : reportWithHealthParameter.healthParameters) {
+                    if(healthParameter.healthParameterPriority >= priority) {
+                        SummaryHealthParameter summaryHealthParameter = summaryReport.getSummaryHealthParameter(healthParameter.healthParameterName, healthParameter.healthParameterPriority);
+                        summaryHealthParameter.values.add(healthParameter.value);
+                    }
+                }
+            }
+
+            for (SummaryHealthParameter summaryHealthParameter : summaryReport.summaryHealthParameters) {
+                if (summaryHealthParameter.getAverageValue() > threshold) {
+                    Notification.setThresholdExceededNotification(this, summaryHealthParameter.name, threshold, summaryHealthParameter.getAverageValue());
+                }
+            }
+
+            finish();
+        });
+
     }
 
     private boolean isValidHealthReport() {

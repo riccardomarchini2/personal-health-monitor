@@ -31,5 +31,9 @@
     <string name="report_remembered_at">Report alarm at</string>
     <string name="choose_time">Choose time</string>
     <string name="report_postpone_by">Postpone by</string>
+    <string name="threshold_text_view">Threshold</string>
+    <string name="threshold_control_text_view">Threshold Control</string>
+    <string name="edit_report_button">edit_report_button</string>
+
 
 </resources>

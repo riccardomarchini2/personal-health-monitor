@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -41,6 +42,9 @@ public class ReportsFragment extends BaseFragment {
 
     @BindView(R.id.reports_recycler_view)
     RecyclerView reportsRecyclerView;
+
+    @BindView(R.id.edit_report_button)
+    ImageButton edit_report_button;
 
     @Inject ViewModelFactory viewModelFactory;
 
@@ -103,6 +107,10 @@ public class ReportsFragment extends BaseFragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeTouchHelper);
         itemTouchHelper.attachToRecyclerView(reportsRecyclerView);
+    }
+
+    public void onEditReportClicked(View view) {
+        //mi dovrebbe portare alla'activity report con i campi gia avvalorati
     }
 
     private void onDateChanged(LocalDate localDate) {
